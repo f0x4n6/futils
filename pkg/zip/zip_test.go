@@ -7,7 +7,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/hiforensics/utils/pkg/test"
+	"github.com/cuhsat/futils/pkg/test"
 )
 
 func TestIndex(t *testing.T) {

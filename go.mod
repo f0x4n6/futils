@@ -1,3 +1,3 @@
-module github.com/hiforensics/utils
+module github.com/cuhsat/futils
 
 go 1.24

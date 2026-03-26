@@ -1,4 +1,4 @@
-// Zip archive functions.
+// Package zip archive functions.
 package zip
 
 import (
@@ -12,7 +12,7 @@ type Zip struct {
 	w *zip.Writer
 }
 
-func NewZip(name, meta string) (z *Zip, err error) {
+func New(name, meta string) (z *Zip, err error) {
 	z = &Zip{}
 
 	z.f, err = os.Create(name)
@@ -35,7 +35,7 @@ func (z *Zip) Write(src, dst string) (err error) {
 		return
 	}
 
-	defer s.Close()
+	defer func() { _ = s.Close() }()
 
 	d, err := z.w.Create(dst)
 

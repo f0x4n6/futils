@@ -1,4 +1,4 @@
-// System functions.
+// Package sys functions.
 package sys
 
 import (
@@ -29,32 +29,30 @@ const (
 	MODE_FILE = 0644
 )
 
-var (
-	Progress Any = Print
-)
+var Progress Any = Print
 
 type Any func(a ...any)
 
 func Print(a ...any) {
-	fmt.Fprintln(os.Stdout, a...)
+	_, _ = fmt.Fprintln(os.Stdout, a...)
 }
 
 func Error(a ...any) {
-	fmt.Fprintln(os.Stderr, a...)
+	_, _ = fmt.Fprintln(os.Stderr, a...)
 }
 
 func Final(a ...any) {
-	fmt.Fprintln(os.Stdout, a...)
+	_, _ = fmt.Fprintln(os.Stdout, a...)
 	os.Exit(EX_OK)
 }
 
 func Fatal(a ...any) {
-	fmt.Fprintln(os.Stderr, a...)
+	_, _ = fmt.Fprintln(os.Stderr, a...)
 	os.Exit(EX_ERROR)
 }
 
 func Usage(u string) {
-	fmt.Fprintln(os.Stdout, "Usage:", u)
+	_, _ = fmt.Fprintln(os.Stdout, "Usage:", u)
 	os.Exit(EX_USAGE)
 }
 
@@ -62,7 +60,7 @@ func Debug(d string) {
 	_, f, no, ok := runtime.Caller(1)
 
 	if ok {
-		fmt.Fprintf(os.Stdout, "%s:%d %s\n", f, no, d)
+		_, _ = fmt.Fprintf(os.Stdout, "%s:%d %s\n", f, no, d)
 	}
 }
 
@@ -88,9 +86,9 @@ func Args() (args, xargs []string) {
 
 	if i > -1 && i < len(args)-1 {
 		return args[:i], args[i+1:]
-	} else {
-		return
 	}
+
+	return
 }
 
 func Stdin() (in string, err error, code int) {
@@ -147,11 +145,11 @@ func call(stdout, stderr io.Writer, name string, args ...string) int {
 
 	err = cmd.Run()
 
-	if ee, ok := err.(*exec.ExitError); ok {
+	if ee, ok := errors.AsType[*exec.ExitError](err); ok {
 		return ee.ExitCode()
 	} else if err != nil {
 		return EX_NOTEXEC
-	} else {
-		return EX_OK
 	}
+
+	return EX_OK
 }

@@ -1,4 +1,4 @@
-// Hash functions.
+// Package hash functions.
 package hash
 
 import (
@@ -27,7 +27,7 @@ const (
 var Supported = [...]string{CRC32, MD5, SHA1, SHA256}
 
 func Sum(name, algo string) (b []byte, err error) {
-	h, err := new(algo)
+	h, err := New(algo)
 
 	if err != nil {
 		return
@@ -39,7 +39,7 @@ func Sum(name, algo string) (b []byte, err error) {
 		return
 	}
 
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	if _, err = io.Copy(h, f); err != nil {
 		return
@@ -50,7 +50,7 @@ func Sum(name, algo string) (b []byte, err error) {
 	return
 }
 
-func new(name string) (h hash.Hash, err error) {
+func New(name string) (h hash.Hash, err error) {
 	switch strings.ToLower(name) {
 	case CRC32:
 		h = crc32.NewIEEE()

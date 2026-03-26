@@ -1,4 +1,4 @@
-// Test functions.
+// Package test functions.
 package test
 
 import (

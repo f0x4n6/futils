@@ -1,4 +1,4 @@
-// Zip utils functions.
+// Package zip utils functions.
 package zip
 
 import (
@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"slices"
 
-	"github.com/cuhsat/futils/pkg/sys"
+	"github.com/f0x4n6/futils/pkg/sys"
 )
 
 func Index(name string) (files []string, err error) {
@@ -18,7 +18,7 @@ func Index(name string) (files []string, err error) {
 		return
 	}
 
-	defer a.Close()
+	defer func() { _ = a.Close() }()
 
 	for _, f := range a.File {
 		if !f.FileInfo().IsDir() {
@@ -38,13 +38,13 @@ func Unzip(name, dir string) (err error) {
 		return
 	}
 
-	defer a.Close()
+	defer func() { _ = a.Close() }()
 
 	for _, f := range a.File {
 		file := filepath.Join(dir, f.Name)
 
 		if f.FileInfo().IsDir() {
-			os.MkdirAll(file, sys.MODE_ALL)
+			_ = os.MkdirAll(file, sys.MODE_ALL)
 			continue
 		}
 
@@ -61,14 +61,14 @@ func Unzip(name, dir string) (err error) {
 		dst, err := os.OpenFile(file, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
 
 		if err != nil {
-			src.Close()
+			_ = src.Close()
 			return err
 		}
 
 		_, err = io.Copy(dst, src)
 
-		dst.Close()
-		src.Close()
+		_ = dst.Close()
+		_ = src.Close()
 
 		if err != nil {
 			return err

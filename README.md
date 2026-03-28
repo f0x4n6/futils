@@ -1,4 +1,4 @@
-# FUtils
+# futils
 Forensic Artifacts Collecting Toolkit utils library.
 
 ## License

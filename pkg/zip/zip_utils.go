@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"slices"
 
-	"go.foxforensics.dev/futils/pkg/sys"
+	"go.foxforensics.eu/futils/pkg/sys"
 )
 
 func Index(name string) (files []string, err error) {

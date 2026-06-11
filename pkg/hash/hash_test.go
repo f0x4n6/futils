@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"go.foxforensics.dev/futils/pkg/test"
+	"go.foxforensics.eu/futils/pkg/test"
 )
 
 func TestSum(t *testing.T) {

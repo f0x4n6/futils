@@ -1,3 +1,3 @@
-module go.foxforensics.dev/futils
+module go.foxforensics.eu/futils
 
 go 1.26

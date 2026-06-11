@@ -7,7 +7,7 @@ import (
 	"slices"
 	"testing"
 
-	"go.foxforensics.dev/futils/pkg/test"
+	"go.foxforensics.eu/futils/pkg/test"
 )
 
 func TestIndex(t *testing.T) {
